@@ -1,0 +1,224 @@
+import React from "react";
+import { Sun, CloudRain, Wind, Droplets, Eye, SunDim } from "lucide-react";
+import SearchBar from "./components/SearchBar";
+import WeatherCard from "./components/WeatherCard";
+import ForecastCard from "./components/ForecastCard";
+import Highlights from "./components/Highlights";
+import UnitToggle from "./components/unitToggle";
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white shadow-xl rounded-3xl w-[1000px] grid grid-cols-3 overflow-hidden">
+        
+        {/* Colonne gauche */}
+        <div className="bg-white p-6 flex flex-col justify-between border-r">
+          <div>
+            <input
+              type="text"
+              placeholder="Search for places..."
+              className="input input-bordered w-full rounded-full mb-6"
+            />
+            <div className="flex flex-col items-center text-center">
+              <Sun size={100} color="#facc15" />
+              <h1 className="text-5xl font-bold mt-4">12°C</h1>
+              <p className="text-gray-500 mt-2">Monday, 16:00</p>
+              <div className="mt-4">
+                <p className="flex items-center justify-center gap-2 text-gray-600">
+                  <CloudRain size={18} /> Mostly Cloudy
+                </p>
+                <p className="text-sm text-gray-500 mt-1">🌧 Rain - 30%</p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-xl overflow-hidden mt-8">
+            <img
+              src="https://images.unsplash.com/photo-1549921296-3e04a6f89d5a?auto=format&fit=crop&w=800&q=80"
+              alt="City"
+              className="rounded-xl"
+            />
+            <p className="text-center mt-2 font-medium">New York, NY, USA</p>
+          </div>
+        </div>
+
+        {/* Colonne droite - contenu principal */}
+        <div className="col-span-2 p-8 space-y-6">
+          {/* Onglets */}
+          <div className="flex justify-between items-center">
+            <div className="tabs">
+              <a className="tab tab-active">Today</a>
+              <a className="tab">Week</a>
+            </div>
+            <div className="flex items-center gap-2">
+              <button className="btn btn-circle btn-sm">°C</button>
+              <button className="btn btn-circle btn-sm btn-ghost">°F</button>
+              <div className="avatar">
+                <div className="w-8 rounded-full">
+                  <img src="https://i.pravatar.cc/100" alt="user" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Prévisions semaine */}
+          <div className="grid grid-cols-7 gap-4">
+            {[
+              { day: "Sun", temp: "15° / 3°", icon: <Sun /> },
+              { day: "Mon", temp: "12° / 7°", icon: <CloudRain /> },
+              { day: "Tue", temp: "9° / 7°", icon: <CloudRain /> },
+              { day: "Wed", temp: "8° / 1°", icon: <CloudRain /> },
+              { day: "Thu", temp: "5° / 2°", icon: <Wind /> },
+              { day: "Fri", temp: "4° / 4°", icon: <Sun /> },
+              { day: "Sat", temp: "3° / 3°", icon: <Sun /> },
+            ].map((item) => (
+              <div
+                key={item.day}
+                className="bg-gray-50 p-3 rounded-xl text-center shadow-sm"
+              >
+                <p className="font-semibold">{item.day}</p>
+                <div className="flex justify-center my-2">{item.icon}</div>
+                <p className="text-sm text-gray-500">{item.temp}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Today’s Highlights */}
+          <h2 className="font-bold text-lg">Today's Highlights</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="card bg-gray-50 shadow p-4">
+              <h3 className="font-semibold mb-2">UV Index</h3>
+              <p className="text-3xl font-bold text-orange-500">5</p>
+            </div>
+
+            <div className="card bg-gray-50 shadow p-4">
+              <h3 className="font-semibold mb-2">Wind Status</h3>
+              <p className="text-3xl font-bold">7.7 km/h</p>
+              <p className="text-gray-500 text-sm">WSW</p>
+            </div>
+
+            <div className="card bg-gray-50 shadow p-4">
+              <h3 className="font-semibold mb-2">Sunrise & Sunset</h3>
+              <p>🌅 6:35 AM</p>
+              <p>🌇 5:42 PM</p>
+            </div>
+
+            <div className="card bg-gray-50 shadow p-4">
+              <h3 className="font-semibold mb-2">Humidity</h3>
+              <p className="text-3xl font-bold">12%</p>
+              <p className="text-sm text-gray-500">Normal 👍</p>
+            </div>
+
+            <div className="card bg-gray-50 shadow p-4">
+              <h3 className="font-semibold mb-2">Visibility</h3>
+              <p className="text-3xl font-bold">5.2 km</p>
+              <p className="text-sm text-gray-500">Average 😐</p>
+            </div>
+
+            <div className="card bg-gray-50 shadow p-4">
+              <h3 className="font-semibold mb-2">Air Quality</h3>
+              <p className="text-3xl font-bold">105</p>
+              <p className="text-sm text-red-500">Unhealthy 👎</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
+  <WeatherCard weather={weather} unit={unit} />
+  <UnitToggle unit={unit} setUnit={setUnit} />
+  <ForecastCard forecast={forecast} />
+  <Highlights weather={weather} unit={unit} />
+  );
+
+}
+
+<!-- import React, { useEffect, useState } from "react";
+import SearchBar from "./components/SearchBar";
+import WeatherCard from "./components/WeatherCard";
+import ForecastCard from "./components/ForecastCard";
+import Highlights from "./components/Highlights";
+import UnitToggle from "./components/UnitToggle";
+
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+
+export default function App() {
+  const [city, setCity] = useState("New York");
+  const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState([]);
+  const [unit, setUnit] = useState("metric");
+  const [query, setQuery] = useState("");
+
+  
+  const fetchWeather = async (cityName) => {
+    try {
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=${unit}`
+      );
+      const data = await res.json();
+      setWeather(data);
+
+      const res2 = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}&units=${unit}`
+      );
+      const forecastData = await res2.json();
+      const daily = forecastData.list.filter((item) =>
+        item.dt_txt.includes("12:00:00")
+      );
+      setForecast(daily);
+    } catch (error) {
+      console.error("Erreur API météo:", error);
+    }
+  };
+ useEffect(() => {
+    fetchWeather(city);
+  }, [city, unit, fetchWeather]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim() !== "") {
+      setCity(query);
+      setQuery("");
+    }
+  };
+
+  if (!weather) {
+    return <div className="text-center mt-20 text-xl">Chargement...</div>;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white shadow-xl rounded-3xl w-[1000px] grid grid-cols-3 overflow-hidden">
+        {/* Colonne gauche */}
+        <div className="bg-white p-6 flex flex-col justify-between border-r">
+          <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
+          <WeatherCard weather={weather} unit={unit} />
+          <div className="rounded-xl overflow-hidden mt-8">
+            <img
+              src="https://images.unsplash.com/photo-1549921296-3e04a6f89d5a?auto=format&fit=crop&w=800&q=80"
+              alt="City"
+              className="rounded-xl"
+            />
+            <p className="text-center mt-2 font-medium">
+              {weather.name}, {weather.sys.country}
+            </p>
+          </div>
+        </div>
+
+        {/* Colonne droite */}
+        <div className="col-span-2 p-8 space-y-6">
+          <div className="flex justify-between items-center">
+            <div className="tabs">
+              <a className="tab tab-active">Today</a>
+              <a className="tab">Week</a>
+            </div>
+            <UnitToggle unit={unit} setUnit={setUnit} />
+          </div>
+
+          <ForecastCard forecast={forecast} />
+          <Highlights weather={weather} unit={unit} />
+        </div>
+      </div>
+    </div>
+  );
+} -->
