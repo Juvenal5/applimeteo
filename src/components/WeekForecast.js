@@ -1,9 +1,6 @@
 import React from "react";
 import { formatForecast } from"./Donnée";
 
-
-
-
 export const WeekForecast = ({ forecast, unit }) => {
   const week = formatForecast(forecast);
 
