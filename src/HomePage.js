@@ -113,7 +113,7 @@ export function HomePage({ onSubmit }) {
                 errors.telephone ? "border-red-500" : "border-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
               placeholder="+225 XX XX XX XX XX"
-            />
+            />  
             {errors.telephone && <p className="text-red-500 text-sm mt-1">{errors.telephone}</p>}
           </div>
 
