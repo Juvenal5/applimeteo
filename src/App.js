@@ -47,7 +47,7 @@ function App() {
     }
   }, []);
 
-  // Sauvegarder user
+  // Sauvegarder utilisateur (user)
   const handleUserSubmit = (data) => {
     setUserData(data);
     localStorage.setItem("meteoUserData", JSON.stringify(data));
