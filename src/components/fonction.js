@@ -90,7 +90,7 @@ export const RécupérationQualitéAir = async (lat, lon) => {
         2: 75, 
         3: 125, 
         4: 175, 
-        5: 300   
+        5: 300,   
       };
       
       return conversion[aqi] || 0;
